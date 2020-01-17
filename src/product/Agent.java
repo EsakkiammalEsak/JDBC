@@ -1,9 +1,51 @@
 package product;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Agent extends Admin {
 private String ProductID;
 private String BuyorSell;
 private int Quantity;
+private String name;
+private float TotCost;
+public float getTotCost() {
+	return TotCost;
+}
+
+public void setTotCost(float totCost) {
+	TotCost = totCost;
+}
+
+public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public float getPrice() {
+	return price;
+}
+
+public void setPrice(float price) {
+	this.price = price;
+}
+
+public int getQuantityAvail() {
+	return QuantityAvail;
+}
+
+public void setQuantityAvail(int quantityAvail) {
+	QuantityAvail = quantityAvail;
+}
+
+
+private float price;
+private int QuantityAvail;
 
 
 
@@ -35,26 +77,38 @@ public int getQuantity() {
 public void setQuantity(int quantity) {
 	Quantity = quantity;
 }
+}
+/*float TC=0;
+public float Display() throws SQLException
 
-float TotalCost;
-public void BuyorSell(String ProductId,String ProductName,float Price,int QuantityAvailable,int Quantity,String ProductID)
 {
-	if(ProductID==ProductId)
+	Connection connection;
+	connection=ConnectionManager.getConnection();
+	Statement ss=connection.createStatement();
+	ResultSet rs= ss.executeQuery("Select * from Admin where ProductId ="+ProductID);
+	while(rs.next())
 	{
-		System.out.println("Product name"+ProductName);
-		System.out.println("Price"+Price);
-	}
-	if(Quantity<=QuantityAvailable)
+	String name =rs.getString("ProductName")	;
+	float price=rs.getFloat("Price");
+	int Quan=rs.getInt("QuantityAvailable");
+	System.out.println("Quan");
+	if(Quantity<=Quan)
 	{
 		System.out.println("Product is available");
-		TotalCost=Quantity*Price;
-		System.out.println("TotalCost"+TotalCost);
+		TC=Quantity*price;
+		System.out.println("TotalCost"+TC);
 	}
 	else
 	{
 		System.out.println("Product is unavailable");
 	}
 	
+	}
+	return  TC;
+	
+	
+								
+	
 }
 
-}
+}*/

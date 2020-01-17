@@ -1,4 +1,8 @@
 package product;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +13,7 @@ import daompl.productimp;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 		Scanner s=new Scanner(System.in);
 		String firstname;
@@ -49,16 +53,16 @@ public class Main {
 		int MinSellQuantity;
 		float Price;
 		int QuantityAvailable;
-		float TotalCost;
-		ProductId=s.next();
-		 ProductName=s.next();
-	     MinSellQuantity=s.nextInt();
-	     Price=s.nextFloat();
-	      TotalCost=MinSellQuantity*Price;
-	      QuantityAvailable=MinSellQuantity;
-	      ProductID=s.next();
+		float TotalCost ;
+		float  TotCost=0;
+		String name = null;
+		float price = 0;
+		int QuantityAvail = 0;
+		
+	      /*ProductID=s.next();
 	    	BuyorSell=s.next();
-	    	Quantity=s.nextInt();
+	    	
+	    	Quantity=s.nextInt();*/
 		//ConnectionManager cm=new ConnectionManager();
 		//cm.getConnection();
 		while(true) {
@@ -66,11 +70,17 @@ public class Main {
 		int n=s.nextInt();
 	    switch(n)
 		{
-		case 1:
+		case 
+		1:
 			while(true)
 			
 			{
-				
+				ProductId=s.next();
+				 ProductName=s.next();
+			     MinSellQuantity=s.nextInt();
+			     Price=s.nextFloat();
+			      TotalCost=MinSellQuantity*Price;
+			      QuantityAvailable=MinSellQuantity;
 			      Admin a=new Admin();
 			        a.setProductId(ProductId);
 				    a.setProductName(ProductName);
@@ -111,17 +121,44 @@ public class Main {
 	    case 2:
 	    	System.out.println("Agent");
 	    	Agent a1=new Agent();
-	    	/*ProductID=s.next();
+	    	ProductID=s.next();
 	    	BuyorSell=s.next();
-	    	Quantity=s.nextInt();*/
-	    	a1.setProductName(ProductName);
-	    	a1.setPrice(Price);
-	    	a1.setQuantityAvailable(QuantityAvailable);
+	    	Quantity=s.nextInt();
+	    	Connection connection;
+	    	connection=ConnectionManager.getConnection();
+	    	Statement ss=connection.createStatement();
+	    	ResultSet rs= ss.executeQuery("Select * from Admin where ProductId ="+ProductID);
+	    	while(rs.next())
+	    	{
+	    	 name =rs.getString("ProductName")	;
+	    	price=rs.getFloat("Price");
+	    	 QuantityAvail=rs.getInt("QuantityAvailable");
+	    	
+	    	if(Quantity<=QuantityAvail)
+	    	{
+	    		
+	    		TotCost=Quantity*price;
+	    		
+	    	}
+	    	else
+	    	{
+	    		System.out.println("Product is unavailable");
+	    	}
+	    	 
+	    	}
+	    	
 	    	a1.setProductID(ProductID);
 	    	a1.setBuyorSell(BuyorSell);
             a1.setQuantity(Quantity);
-            a1.setTotalCost(TotalCost);
-	    	a1.BuyorSell(ProductId,ProductName,Price,QuantityAvailable,Quantity,ProductID);
+            a1.setTotCost(TotCost);
+            a1.setName(name);
+            a1.setPrice(price);
+            a1.setQuantityAvail(QuantityAvail);
+            
+            System.out.println("Product is available");
+	         System.out.println("TotalCost"+TotCost);
+            
+	    	
 	    	Agentimp t   =new AgentDao();
 		    if(t.save(a1))
 		    System.out.println("Data entered sucessfully");
@@ -130,7 +167,7 @@ public class Main {
 		    
 		   List<Agent> list2=t.displayAllAgent();
 	        case 3:
-	    	System.out.println("Exit");
+	    	//System.out.println("Exit");
 	    	System.exit(n);
 		}
 	}

@@ -13,16 +13,16 @@ public class AgentDao extends ConnectionManager implements Agentimp {
 	
 public boolean save(Agent a1)
 			{
-				String sql="insert into Agent(ProductID,ProductName,Price,QuantityAvailable,BuyorSell,Quantity,TotalCost)values(?,?,?,?,?,?,?)";
+				String sql="insert into Agent(ProductID,name,price,QuantityAvail,BuyorSell,Quantity,TotCost)values(?,?,?,?,?,?,?)";
 				try{
 			    PreparedStatement ps=ConnectionManager.getConnection().prepareStatement(sql);
 				ps.setString(1,a1.getProductID());
-				ps.setString(2,a1.getProductName());
+				ps.setString(2,a1.getName());
 				ps.setFloat(3,(float) a1.getPrice());
-				ps.setInt(4,a1.getQuantityAvailable());
+				ps.setInt(4,a1.getQuantityAvail());
 				ps.setString(5,a1.getBuyorSell());
 				ps.setInt(6,a1.getQuantity());
-				ps.setFloat(7,(float) a1.getTotalCost());
+				ps.setFloat(7,(float) a1.getTotCost());
 				
 				int resultset=ps.executeUpdate();
 				if(resultset==1) {
@@ -52,12 +52,12 @@ public boolean save(Agent a1)
 					 {
 						 Agent a1=new Agent();
 						 a1.setProductID(rs.getString("ProductID"));
-						 a1.setProductName(rs.getString("ProductName"));
-						 a1.setPrice(rs.getFloat("Price"));
-						 a1.setQuantityAvailable(rs.getInt("QuantityAvailable"));
+						 a1.setName(rs.getString("name"));
+						 a1.setPrice(rs.getFloat("price"));
+						 a1.setQuantityAvail(rs.getInt("QuantityAvail"));
 						 a1.setBuyorSell(rs.getString("BuyorSell"));
 						 a1.setQuantity(rs.getInt("Quantity"));
-						 a1.setTotalCost(rs.getFloat("TotalCost"));
+						 a1.setTotCost(rs.getFloat("TotCost"));
 						 list2.add(a1);
 						 
 				    }
